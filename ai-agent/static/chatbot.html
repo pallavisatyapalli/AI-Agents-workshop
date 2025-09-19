@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List AI Agent</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/chatbot.css">
+</head>
+<body class="bg-[#121212] text-[#E0E0E0]">
+
+    <div class="chatbot-container">
+        <!-- Header with clear chat button -->
+        <header class="flex justify-between items-center py-4 border-b border-[#303030]">
+            <h1 class="text-xl font-semibold text-white">Todo List AI Agent</h1>
+            <button id="clearChatBtn" class="px-3 py-2 text-sm bg-[#404040] hover:bg-[#505050] text-white rounded-lg transition-colors">
+                Clear Chat
+            </button>
+        </header>
+
+        <main id="conversation-area" class="conversation-area">
+            <div id="initial-message" class="flex flex-col items-center justify-center h-full">
+                <div class="w-16 h-16 rounded-full bg-[#20B2AA] flex items-center justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-8 h-8 text-white">
+                        <path d="M9 11H1l3-7 3 7zM21 11h-6l3-7 3 7z"/>
+                        <path d="M4 15h16"/>
+                        <path d="M2 19h20"/>
+                    </svg>
+                </div>
+                <h2 class="text-3xl font-light text-white mb-4">Todo List AI Agent</h2>
+                <p class="text-[#888888] text-center max-w-lg leading-relaxed mb-6">
+                    I'm your friendly AI task manager! I can help you create, organize, and track your tasks with natural language.
+                </p>
+                <div class="text-[#A0A0A0] text-sm text-center max-w-md">
+                    <p class="mb-2">Try saying:</p>
+                    <ul class="space-y-1 text-left">
+                        <li>• "Create a task called 'Buy groceries'"</li>
+                        <li>• "Show me all my tasks"</li>
+                        <li>• "Mark task 1 as complete"</li>
+                        <li>• "Update task 2 description"</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+
+        <footer class="input-area-container">
+            <div class="input-wrapper">
+                <form id="chat-form" class="chat-form" onsubmit="return false;">
+                    <textarea
+                        id="chatInput"
+                        placeholder="What would you like me to help you with?"
+                        rows="1"
+                    ></textarea>
+                    <button type="submit" id="sendChatBtn" title="Send message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7 11L12 6L17 11M12 18V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </form>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/agent.js"></script>
+</body>
+</html>

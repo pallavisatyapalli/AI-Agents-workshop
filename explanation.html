@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AI Agent Implementation – Technical Documentation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body { font-family: 'Segoe UI', Arial, sans-serif; margin: 2em; background: #f8f9fa; color: #222; }
+        h1, h2, h3 { color: #1a237e; }
+        code, pre { background: #e3e7fd; padding: 2px 6px; border-radius: 4px; }
+        .section { margin-bottom: 2em; }
+        ul { margin-top: 0.5em; }
+        .important { font-weight: bold; color: #d84315; }
+        .highlight { background: #fffde7; padding: 0.2em 0.5em; border-radius: 3px; }
+        .diagram-container {
+            background: #fff;
+            border: 1px solid #c5cae9;
+            padding: 1em;
+            margin: 2em 0;
+            text-align: center;
+            border-radius: 8px;
+        }
+        .diagram-caption {
+            color: #333;
+            font-size: 1em;
+            margin-top: 0.5em;
+            font-style: italic;
+        }
+        img.diagram {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #90caf9;
+            border-radius: 6px;
+            background: #f3f6fb;
+        }
+    </style>
+</head>
+<body>
+    <h1>AI Agent Implementation – <span class="highlight">ai-agent/</span> Folder Technical Documentation</h1>
+
+    <div class="section">
+        <h2>Overview</h2>
+        <p>
+            The <code>ai-agent/</code> folder in the <b>AI Agents Workshop</b> (<span class="highlight">mc095/AI-Agents-Workshop</span>) is a comprehensive, hands-on module focused on building and understanding advanced AI agents using <b>FastAPI</b>, <b>SQLite</b>, and <b>Python</b>. This folder moves beyond simple API development, guiding you to create an autonomous agent capable of interacting with users, APIs, and databases through a chatbot interface. It represents the culmination of the workshop sequence, applying foundational skills to a real-world, agentic AI system[1].
+        </p>
+    </div>
+
+    <div class="section diagram-container">
+        <img class="diagram" src="https://i.ibb.co/LzJhC05k/Screenshot-2025-07-05-113118.png" alt="AI Agent System Workflow Diagram">
+        <div class="diagram-caption">
+            <b>Figure:</b> System workflow of the AI Agent implementation. The diagram illustrates the flow of data and control between the user interface, FastAPI backend, agent logic, and database, as well as optional integration with external APIs or LLMs.
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>System Workflow Explanation</h2>
+        <p>
+            The diagram above visualizes the end-to-end workflow of the AI agent system:
+        </p>
+        <ol>
+            <li>
+                <b>User Interaction:</b> The process begins when a user sends a message through the chatbot UI in the <code>static/</code> folder.
+            </li>
+            <li>
+                <b>API Routing:</b> This message is sent to the backend via FastAPI endpoints defined in <code>main.py</code>.
+            </li>
+            <li>
+                <b>Agent Processing:</b> The backend forwards the message to the core agent logic in <code>agent.py</code>, which analyzes the input, determines the appropriate action, and may interact with the database for context or memory.
+            </li>
+            <li>
+                <b>Database Interaction:</b> If needed, the agent reads from or writes to the SQLite database using models defined in <code>models.py</code> (for storing messages, sessions, etc.).
+            </li>
+            <li>
+                <b>Response Generation:</b> The agent composes a response and sends it back to the frontend via the FastAPI endpoint, updating the chat interface in real time.
+            </li>
+            <li>
+                <b>Optional Extensions:</b> The agent logic can also connect to external APIs or LLMs for enhanced capabilities, as shown in the diagram.
+            </li>
+        </ol>
+        <p>
+            This architecture enables robust, autonomous, and extensible agentic behavior, combining modern web technologies with AI-driven reasoning and persistent memory.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Folder Structure & Key Files</h2>
+        <ul>
+            <li><b>agent.py</b>: Core logic for the AI agent – handles user input, decision-making, and orchestrates actions.</li>
+            <li><b>main.py</b>: FastAPI application entry point – defines API endpoints, integrates the agent, and manages request/response cycles.</li>
+            <li><b>models.py</b>: Database models and schemas – defines how data (messages, sessions, etc.) is structured and stored in SQLite.</li>
+            <li><b>static/</b>: Contains frontend assets (HTML, JS, CSS) for the chatbot web interface, enabling real-time interaction with the agent.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Technical Workflow</h2>
+        <ol>
+            <li>
+                <b>User Interaction:</b> The user communicates through a web-based chatbot interface served from the <code>static/</code> directory.
+            </li>
+            <li>
+                <b>API Routing:</b> User messages are sent as HTTP requests to FastAPI endpoints defined in <code>main.py</code>.
+            </li>
+            <li>
+                <b>Agent Processing:</b> The message is routed to <code>agent.py</code>, where the agent:
+                <ul>
+                    <li>Analyzes input (using LLMs, rules, or custom logic).</li>
+                    <li>Decides on a course of action (answer, database query, update, etc.).</li>
+                    <li>May interact with <code>models.py</code> to fetch or store data in SQLite.</li>
+                </ul>
+            </li>
+            <li>
+                <b>Response:</b> The agent's output is returned via the API to the frontend, updating the chat interface in real time.
+            </li>
+        </ol>
+        <p>
+            This design enables the agent to operate <b>autonomously</b>, maintain context, and interact with persistent data, embodying modern agentic AI patterns[1][4].
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Deep Dive: <code>agent.py</code></h2>
+        <p>
+            <b>agent.py</b> is the heart of the AI agent system. Its responsibilities include:
+        </p>
+        <ul>
+            <li>Parsing and understanding user queries (potentially leveraging LLMs or custom NLP logic).</li>
+            <li>Maintaining conversational context and session history (with database support).</li>
+            <li>Executing actions such as querying/updating the database, calling external APIs, or generating dynamic responses.</li>
+            <li>Returning structured responses for consistent frontend display.</li>
+        </ul>
+        <p>
+            The agent is designed to be <b>modular</b> and <b>extensible</b>—you can add new skills, integrate additional APIs, or enhance reasoning capabilities as needed[1].
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Deep Dive: <code>main.py</code></h2>
+        <ul>
+            <li>Initializes the FastAPI application.</li>
+            <li>Defines RESTful endpoints for message exchange, session management, and static file serving.</li>
+            <li>Acts as the bridge between the web interface and the agent logic.</li>
+        </ul>
+        <p>
+            All agent interactions are exposed as HTTP endpoints, making the system suitable for both web and API-first integrations[1].
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>Deep Dive: <code>models.py</code></h2>
+        <ul>
+            <li>Defines <b>ORM models</b> (using SQLAlchemy or similar) for persistent storage in SQLite.</li>
+            <li>Handles user messages, agent responses, and session data.</li>
+            <li>Enables the agent to retrieve historical context, power analytics, or support advanced memory features.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Frontend: <code>static/</code> Chatbot Interface</h2>
+        <ul>
+            <li>Modern, responsive HTML/JS/CSS interface for real-time chat with the agent.</li>
+            <li>AJAX or fetch-based calls to backend endpoints for seamless user experience.</li>
+            <li>Displays conversation history, supports multi-turn dialogues, and provides a user-friendly entry point to the agent system.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Core Agentic Features Demonstrated</h2>
+        <ul>
+            <li><b>Autonomy:</b> The agent operates without manual intervention, handling requests and making decisions independently[4].</li>
+            <li><b>Goal-Oriented Reasoning:</b> Each user message is treated as a task or goal, which the agent seeks to fulfill through reasoning and action.</li>
+            <li><b>Environment Interaction:</b> The agent perceives its environment (user input, database state) and adapts its responses accordingly.</li>
+            <li><b>Learning Potential:</b> With database-backed session history, the agent can be extended to learn from past interactions or personalize responses.</li>
+            <li><b>Extensibility:</b> The modular codebase allows for integration with LLMs, external APIs, or additional agent tools.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>How to Run the AI Agent</h2>
+        <ol>
+            <li>Navigate to the <code>ai-agent/</code> directory.</li>
+            <li>Install dependencies (see <code>requirements.txt</code> if present).</li>
+            <li>Start the FastAPI server:
+                <pre>uvicorn main:app --reload</pre>
+            </li>
+            <li>Open your browser and go to the provided URL (typically <code>http://127.0.0.1:8000</code>).</li>
+            <li>Interact with the agent via the chatbot interface.</li>
+        </ol>
+    </div>
+
+    <div class="section">
+        <h2>Extending the Agent</h2>
+        <ul>
+            <li>Add new skills or actions in <code>agent.py</code> (e.g., API calls, advanced reasoning).</li>
+            <li>Expand the database schema in <code>models.py</code> for richer agent memory.</li>
+            <li>Integrate with external LLMs or toolchains for more sophisticated agentic behavior.</li>
+            <li>Customize the frontend for specific use cases or branding.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>Learning Outcomes</h2>
+        <ul>
+            <li>Understand the architecture and implementation of modern AI agents.</li>
+            <li>Gain hands-on experience with FastAPI, SQLite, and agentic design patterns.</li>
+            <li>Learn how to build, extend, and deploy autonomous agents for real-world applications.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>References</h2>
+        <ul>
+            <li><a href="#">AI Agents Workshop GitHub Repository</a> – Folder structure, code, and sequence[1]</li>
+            <li>General agentic AI concepts and best practices[4]</li>
+        </ul>
+    </div>
+</body>
+</html>
